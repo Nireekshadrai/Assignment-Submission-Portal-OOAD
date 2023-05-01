@@ -45,7 +45,7 @@ create table teachers (id varchar(255) not null, email varchar(255) not null, na
 
 create table files (id varchar(255) not null, data longblob, file_name varchar(255), file_type varchar(255), student_id varchar(255),primary key (id), foreign key(student_id) references users(id));
 ```
-### Run the app using maven
+### Run the app
 
 ```bash
 cd assignment submission portal springMVC
