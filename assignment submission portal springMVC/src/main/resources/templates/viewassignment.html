@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="default">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>Spring Boot File Upload / Download Rest API Example</title>
+    <style>
+ .mainbody
+{
+
+background-image: url("/images/main3.jpeg");
+background-repeat: no-repeat;
+background-size: 100% 100%;
+opacity: rgba(0,0,0,0.6);
+}
+.card
+{
+height: 800px;
+width:100%;
+margin: auto;
+margin-top:-80px;
+background: rgba(0, 0, 0, 0.6);
+}
+.btn1
+{
+  background-color: #000000; /* Green */
+  border-style: solid;
+  border-color:pink;
+  color: white;
+  padding: 30px 155px;
+  text-decoration: none;
+  display: inline-block !important;
+  border-radius: 12px;
+  display:inline-block;
+  transition-duration: 0.4s;
+  font-size: 16px;
+ cursor:pointer;
+  
+}
+.btn1:hover
+{
+ box-shadow: 0 8px 16px 0 rgba(0,0,0,0.9), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+    </style>
+    </head>
+    <body class="mainbody">
+        <div class="card">
+        <noscript>
+            <h2>Sorry! Your browser doesn't support Javascript</h2>
+        </noscript>
+        <br><br><br><br>
+                 <div class="view-all">
+                    <center><p style="font-size:70px;color:white;font-family: 'Amatic SC', sans-serif;"> View Submissions</p></center>
+				    <form id="viewAllForm" name="viewAllForm">
+                    <center><button type="submit" class="btn1 submit-btn" style="color:white">View all submissions</button></center>
+                    </form>
+                        <div class="view-response">
+                        <div id="viewError"></div>
+                        <div id="viewSuccess"></div>
+                    </div>
+                </div>
+            </div>
+
+        <script >
+        'use strict';
+
+
+
+var viewAllForm=document.querySelector('#viewAllForm');
+var viewError=document.querySelector('#viewError');
+var viewSuccess=document.querySelector('#viewSuccess');
+
+
+function viewAllFiles(){
+    //var formData = new FormData();
+    //formData.append("file", file);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/viewAllFiles");
+
+    xhr.onload = function() {
+        console.log(xhr.responseText);
+        var response = JSON.parse(xhr.responseText);
+        if(xhr.status == 200) {
+            viewError.style.display = "none";
+            var content="<p>All submissions </p>";
+            var j=0;
+            for(var i = 0; i < response.length; i++){
+				j=i+1;
+				console.log(response);
+             content+= "<p>"+j+".) "+"<a href='" + response[i].fileDownloadUrl+ "' target='_blank'><button>"+response[i].fileName + "</button></a>";+"</p>";}
+             viewSuccess.innerHTML=content;
+            viewSuccess.style.display = "block";
+        } else {
+            viewSuccess.style.display = "none";
+            viewError.innerHTML = (response && response.message) || "Some Error Occurred";
+        }
+    }
+
+    xhr.send();
+}
+
+
+
+
+viewAllForm.addEventListener('submit', function(event){
+    
+    viewAllFiles();
+    event.preventDefault();
+}, true);
+/*login.addEventListener('submit',function(event){
+	login();
+	event.preventDefault();
+},true);*/
+
+        </script>
+    </body>
+</html>

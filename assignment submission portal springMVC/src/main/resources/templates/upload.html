@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en"
+      
+      layout:decorate="default">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>Assignment submission portal</title>
+
+    </head>
+    <style>
+    .mainclass
+    {
+	background-image: url("/images/main3.jpeg");
+	background-repeat: no-repeat;
+    background-size: 1525px 1000px;
+    opacity: rgba(0,0,0,0.6);
+}
+.main
+{
+padding: 40px 20px;
+width: 40%;
+border-radius: 25px;
+margin: auto;
+margin-top:60px;
+background-color: white;
+text-align: center;
+}
+.card
+{
+height: 800px;
+width:100%;
+margin: auto;
+margin-top: -90px;
+background: rgba(0, 0, 0, 0.6);
+}
+.mainclass:before {
+    height: 50%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    z-index: 0;
+}
+.btn1
+{
+    background-color: #000000; /* Green */
+  border-style: solid;
+  border-color:pink;
+  color: white;
+  padding: 5px 50px;
+  text-decoration: none;
+  display: inline-block !important;
+  border-radius: 12px;
+  display:inline-block;
+  transition-duration: 0.4s;
+  font-size: 16px;
+ cursor:pointer;
+  
+}
+.btn1:hover
+{
+ box-shadow: 0 8px 16px 0 rgba(0,0,0,0.9), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.btn2:hover
+{
+ box-shadow: 0 8px 16px 0 rgba(0,0,0,0.9), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.btn2
+{
+    background-color: #000000; /* Green */
+  border-style: solid;
+  border-color:pink;
+  color: white;
+  padding: 5px 50px;
+  text-decoration: none;
+  display: inline-block !important;
+  border-radius: 12px;
+  display:inline-block;
+  transition-duration: 0.4s;
+  font-size: 16px;
+ cursor:pointer;
+}
+    </style>
+    <body class=mainclass>
+        <div class="card">
+        <noscript>
+            <h2>Sorry! Your browser doesn't support Javascript</h2>
+        </noscript>
+        <div class="upload-container">
+            <div class="upload-header">
+                <h2>assignment submission portal</h2>
+            </div><br><br><br>
+            <div class="main">
+            <div class="upload-content">
+                <div class="single-upload">
+                    <h1>Upload assignment</h1>
+                    <form id="singleUploadForm" name="singleUploadForm">
+                        <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                        <button type="submit" class="btn1 submit-btn">Submit</button>
+                        </form>
+                        <form id="deleteForm" name="deleteForm">
+                        <button type="submit" class="primary submit-btn">Undo</button>
+                    </form>
+                    <div class="upload-response">
+                        <div id="singleFileUploadError"></div>
+                        <div id="singleFileUploadSuccess"></div>
+                    </div>
+                </div>
+                </div>
+                <!--<div class="multiple-upload">
+                    <h1>Upload Multiple Files</h1>
+                    <form id="multipleUploadForm" name="multipleUploadForm">
+                        <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required />
+                        <button type="submit" class="btn1 submit-btn">Submit</button>
+                    </form>
+                    <div class="upload-response">
+                        <div id="multipleFileUploadError"></div>
+                        <div id="multipleFileUploadSuccess"></div>
+                    </div>
+                </div>-->
+                 <div class="view-all">
+                    <h2>View all files</h2>
+
+				    <form id="viewAllForm" name="viewAllForm">
+                    <center><button type="submit" class="btn2 submit-btn" text-align="center">View all submissions</button></center>
+                    </form>
+                                        <div class="view-response">
+                        <div id="viewError"></div>
+                        <div id="viewSuccess"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script >
+        'use strict';
+var deleteForm = document.querySelector('#deleteForm');
+var singleUploadForm = document.querySelector('#singleUploadForm');
+var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
+var singleFileUploadError = document.querySelector('#singleFileUploadError');
+var singleFileUploadSuccess = document.querySelector('#singleFileUploadSuccess');
+//var login=document.querySelector('#login');
+var multipleUploadForm = document.querySelector('#multipleUploadForm');
+var multipleFileUploadInput = document.querySelector('#multipleFileUploadInput');
+var multipleFileUploadError = document.querySelector('#multipleFileUploadError');
+var multipleFileUploadSuccess = document.querySelector('#multipleFileUploadSuccess');
+var viewAllForm=document.querySelector('#viewAllForm');
+var viewError=document.querySelector('#viewError');
+var viewSuccess=document.querySelector('#viewSuccess');
+var fileid="0";
+function deleteFile(fileid) {
+    var formData = new FormData();
+    console.log("hi");
+    console.log(fileid);
+    formData.append("fileid", fileid);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/delete");
+   /* xhr.onload = function() {
+        console.log(xhr.responseText);
+       
+        if(xhr.status == 200) {
+            singleFileUploadError.style.display = "none";
+            singleFileUploadSuccess.innerHTML = "<p>deleted succesfully</p>";
+            singleFileUploadSuccess.style.display = "block";
+        } else {
+            singleFileUploadSuccess.style.display = "none";
+            singleFileUploadError.innerHTML = "error deleting";
+        }
+        }
+
+*/
+    xhr.send(formData);
+}
+
+var fileid="0";
+function uploadSingleFile(file) {
+    var formData = new FormData();
+    formData.append("file", file);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/uploadFile");
+
+    xhr.onload = function() {
+        console.log(xhr.responseText);
+        var response = JSON.parse(xhr.responseText);
+               fileid=response.fileId;
+        console.log(fileid);
+        if(xhr.status == 200) {
+            singleFileUploadError.style.display = "none";
+            singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p><p>DownloadUrl :"+ fileid+" <a href='" + response.fileDownloadUri + "' target='_blank'>" + response.fileDownloadUri + "</a></p>";
+            singleFileUploadSuccess.style.display = "block";
+        } else {
+            singleFileUploadSuccess.style.display = "none";
+            singleFileUploadError.innerHTML = (response && response.message) || "Some Error Occurred";
+        }
+        }
+
+    
+
+    xhr.send(formData);
+}
+/*
+function uploadMultipleFiles(files) {
+    var formData = new FormData();
+    for(var index = 0; index < files.length; index++) {
+        formData.append("files", files[index]);
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/uploadMultipleFiles");
+
+    xhr.onload = function() {
+        console.log(xhr.responseText);
+        var response = JSON.parse(xhr.responseText);
+        if(xhr.status == 200) {
+            multipleFileUploadError.style.display = "none";
+            var content = "<p>All Files Uploaded Successfully</p>";
+            for(var i = 0; i < response.length; i++) {
+                content += "<p>DownloadUrl : <a href='" + response[i].fileDownloadUri + "' target='_blank'>" + response[i].fileDownloadUri + "</a></p>";
+            }
+            multipleFileUploadSuccess.innerHTML = content;
+            multipleFileUploadSuccess.style.display = "block";
+        } else {
+            multipleFileUploadSuccess.style.display = "none";
+            multipleFileUploadError.innerHTML = (response && response.message) || "Some Error Occurred";
+        }
+    }
+
+    xhr.send(formData);
+}*/
+// function viewAllFiles(){
+//     //var formData = new FormData();
+//     //formData.append("file", file);
+
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("GET", "/viewAllFiles");
+
+//     xhr.onload = function() {
+//         console.log(xhr.responseText);
+//         var response = JSON.parse(xhr.responseText);
+//         if(xhr.status == 200) {
+//             viewError.style.display = "none";
+//             var content="<p>All submissions </p>";
+//             var j=0;
+//             for(var i = 0; i < response.length; i++){
+// 				j=i+1;
+//              content+= "<p>"+j+".) "+response[i]+"</p>";}
+//              viewSuccess.innerHTML=content;
+//             viewSuccess.style.display = "block";
+//         } else {
+//             viewSuccess.style.display = "none";
+//             viewError.innerHTML = (response && response.message) || "Some Error Occurred";
+//         }
+//     }
+
+//     xhr.send();
+// }
+function viewMySubmission(){
+    //var formData = new FormData();
+    //formData.append("file", file);
+console.log("eyy");
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/viewMyFiles");
+
+    xhr.onload = function() {
+        console.log(xhr.responseText);
+        var response = JSON.parse(xhr.responseText);
+        if(xhr.status == 200) {
+            viewError.style.display = "none";
+            var content="<p>All submissions </p>";
+            var j=0;
+            for(var i = 0; i < response.length; i++){
+				j=i+1;
+             content+= "<p>"+j+".) "+response[i].fileName+"</p>";}
+             viewSuccess.innerHTML=content;
+            viewSuccess.style.display = "block";
+        } else {
+            viewSuccess.style.display = "none";
+            viewError.innerHTML = (response && response.message) || "Some Error Occurred";
+        }
+    }
+
+    xhr.send();
+}
+
+singleUploadForm.addEventListener('submit', function(event){
+    var files = singleFileUploadInput.files;
+    if(files.length === 0) {
+        singleFileUploadError.innerHTML = "Please select a file";
+        singleFileUploadError.style.display = "block";
+    }
+    uploadSingleFile(files[0]);
+    event.preventDefault();
+}, true);
+
+
+/*multipleUploadForm.addEventListener('submit', function(event){
+    var files = multipleFileUploadInput.files;
+    if(files.length === 0) {
+        multipleFileUploadError.innerHTML = "Please select at least one file";
+        multipleFileUploadError.style.display = "block";
+    }
+    uploadMultipleFiles(files);
+    event.preventDefault();
+}, true);*/
+// viewAllForm.addEventListener('submit', function(event){
+    
+//     viewAllFiles();
+//     event.preventDefault();
+// }, true);
+deleteForm.addEventListener('submit', function(event){
+    var files = singleFileUploadInput.files;
+    deleteFile(fileid);
+    event.preventDefault();
+}, true);
+viewAllForm.addEventListener('submit', function(event){
+
+viewMySubmission();
+event.preventDefault();
+}, true);
+/*login.addEventListener('submit',function(event){
+	login();
+	event.preventDefault();
+},true);*/
+
+        </script>
+    </body>
+</html>

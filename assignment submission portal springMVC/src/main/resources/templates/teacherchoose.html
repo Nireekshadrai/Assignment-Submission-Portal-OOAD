@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="default">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>Spring Boot File Upload / Download Rest API Example</title>
+    <style>
+.mainbody
+{
+
+background-image: url("/images/main3.jpeg");
+background-repeat: no-repeat;
+background-size: 1525px 1000px;
+opacity: rgba(0,0,0,0.6);
+}
+.card
+{
+height: 1000px;
+width:100%;
+margin: auto;
+background: rgba(0, 0, 0, 0.6);
+}
+#outer
+{
+width:100%;
+text-align:center;
+}
+
+.inner
+{
+display:inline-block;
+}
+.btn1
+{
+  background-color: #000000; /* Green */
+  border-style: solid;
+  border-color:pink;
+  color: white;
+  padding: 30px 155px;
+  text-decoration: none;
+  display: inline-block !important;
+  border-radius: 12px;
+  display:inline-block;
+  transition-duration: 0.4s;
+  font-size: 16px;
+ cursor:pointer;
+  
+}
+.btn1:hover
+{
+ box-shadow: 0 8px 16px 0 rgba(0,0,0,0.9), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.btn2:hover
+{
+ box-shadow: 0 8px 16px 0 rgba(0,0,0,0.9), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.btn2
+{
+  background-color: #000000; /* Green */
+  border-style: solid;
+  border-color: #FFFFFF;
+  color: white;
+  padding: 30px 155px;
+  -webkit-border-radius:5px;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  cursor:pointer;
+  border-radius: 12px;
+  font-size: 16px;
+  
+ 
+}
+	</style>
+    </head>
+    <body class="mainbody">
+    <div class="card">
+        <noscript>
+            <h2>Sorry! Your browser doesn't support Javascript</h2>
+        </noscript>
+        <br><br><br><br><br><br><br>
+        <center><p style="font-size:70px;color:white;font-family: 'Amatic SC', sans-serif;"> Do you have an account? </p></center>
+      <br>
+       <div id="outer">
+       		<div class="inner">
+       
+            	<form id="login" action="/tr">
+                    	<button type="submit" class="btn1 btn-success" data-inline="true">Register</button></div>
+                </form>
+                <br><br>
+                <div class="inner">
+                	<form action="/tl">
+                    	<button type="submit" class="btn2 btn-success" data-inline="true">Login</button></div>
+                	</form>
+                </div>
+    		</div>
+       
+    </body>
+</html>
