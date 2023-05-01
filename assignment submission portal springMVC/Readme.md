@@ -17,3 +17,11 @@ installation -
 spring.datasource.username= <MYSQL USERNAME>
 spring.datasource.password= <MYSQL PASSWORD>
 ```
+
+**3. Create Tables**
+Create tables `User` to store Student details, `Teachers` to store Teacher details and `Files` to store assignment document deatils -
+```bash
+create table users (id varchar(255) not null, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, primary key (id));
+create table teachers (id varchar(255) not null, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, primary key (id));
+create table files (id varchar(255) not null, data longblob, file_name varchar(255), file_type varchar(255), primary key (id));
+```
